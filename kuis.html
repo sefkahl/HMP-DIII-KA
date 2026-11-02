@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Game Center - HMP D-III Komputerisasi Akuntansi</title>
+    <meta name="description"
+        content="Game Center HMP D-III Komputerisasi Akuntansi Universitas Imelda Medan: bermain sambil belajar.">
+    <meta name="keywords" content="">
+    <link href="assets/img/favicon.png" rel="icon">
+    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
+        rel="stylesheet">
+    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+    <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+    <link href="assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+    <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+    <link href="assets/css/main.css" rel="stylesheet">
+    <style>
+        .game-center {
+            --g-acc: #4567ff;
+            --g-ink: #14213d;
+            --g-line: #e3e8ef;
+            padding: 110px 0 60px;
+            color: var(--g-ink)
+        }
+
+        .game-center .g-hero {
+            background: linear-gradient(135deg, #14213d, #4567ff);
+            color: #fff;
+            border-radius: 24px;
+            padding: 40px 28px;
+            position: relative;
+            overflow: hidden
+        }
+
+        .game-center .g-hero h1 {
+            font-weight: 800;
+            color: #fff
+        }
+
+        .game-center .g-hero .g-big {
+            font-size: 7rem;
+            opacity: .9;
+            animation: gfloat 3s ease-in-out infinite
+        }
+
+        .game-center .g-stat {
+            background: rgba(255, 255, 255, .15);
+            border-radius: 14px;
+            padding: 10px 18px;
+            text-align: center
+        }
+
+        .game-center .g-stat b {
+            display: block;
+            font-size: 1.5rem
+        }
+
+        .game-card {
+            background: #fff;
+            border: 1px solid var(--g-line, #e3e8ef);
+            border-radius: 18px;
+            padding: 20px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            transition: transform .2s, box-shadow .2s
+        }
+
+        .game-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 18px 30px -18px rgba(20, 33, 61, .45)
+        }
+
+        .game-card .g-ic {
+            width: 52px;
+            height: 52px;
+            border-radius: 14px;
+            background: #eef2ff;
+            color: #4567ff;
+            display: grid;
+            place-items: center;
+            font-size: 1.4rem;
+            margin-bottom: 12px
+        }
+
+        .game-card h5 {
+            font-weight: 700;
+            font-size: 1.05rem
+        }
+
+        .game-card p {
+            font-size: .88rem;
+            color: #6b7686;
+            flex: 1
+        }
+
+        .g-badge {
+            font-size: .72rem;
+            font-weight: 700;
+            border-radius: 99px;
+            padding: 3px 10px
+        }
+
+        .g-badge.Mudah {
+            background: #ecfdf3;
+            color: #16a34a
+        }
+
+        .g-badge.Sedang {
+            background: #fff7e0;
+            color: #b7791f
+        }
+
+        .g-badge.Sulit {
+            background: #fff1f3;
+            color: #e11d48
+        }
+
+        .game-center .g-chip {
+            border: 1.5px solid var(--g-line);
+            background: #fff;
+            border-radius: 99px;
+            padding: 6px 16px;
+            font-weight: 600;
+            font-size: .88rem;
+            cursor: pointer
+        }
+
+        .game-center .g-chip.on {
+            background: #4567ff;
+            border-color: #4567ff;
+            color: #fff
+        }
+
+        .game-panel .modal-content {
+            border-radius: 20px
+        }
+
+        #gInfo {
+            display: flex;
+            justify-content: space-between;
+            font-weight: 600;
+            color: #6b7686;
+            margin-bottom: 14px
+        }
+
+        .g-q {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            text-align: center
+        }
+
+        .g-opt {
+            border: 1.5px solid #e3e8ef;
+            border-radius: 12px;
+            padding: 12px;
+            font-weight: 500;
+            text-align: left;
+            background: #fff
+        }
+
+        .g-opt:hover:not(:disabled) {
+            border-color: #4567ff
+        }
+
+        .g-opt.ok,
+        .g-cell.ok {
+            background: #ecfdf3 !important;
+            border-color: #16a34a !important;
+            color: #14532d !important
+        }
+
+        .g-opt.bad,
+        .g-cell.bad {
+            background: #fff1f3 !important;
+            border-color: #e11d48 !important;
+            color: #9f1239 !important
+        }
+
+        .g-logo {
+            font-size: 4rem;
+            display: block;
+            color: #4567ff
+        }
+
+        .g-grid {
+            display: grid;
+            gap: 8px
+        }
+
+        .g-cell {
+            font-size: 1.5rem;
+            padding: 8px;
+            border: 1.5px solid #e3e8ef;
+            border-radius: 10px;
+            background: #fff
+        }
+
+        .g-scr {
+            letter-spacing: .3em;
+            font-size: 1.6rem;
+            color: #4567ff
+        }
+
+        .g-react {
+            width: 100%;
+            height: 200px;
+            border: 0;
+            border-radius: 18px;
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: #fff
+        }
+
+        .g-react.wait {
+            background: #e11d48
+        }
+
+        .g-react.go {
+            background: #16a34a
+        }
+
+        .g-ring {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin: 0 auto 14px;
+            display: grid;
+            place-items: center;
+            font-size: 2.4rem;
+            font-weight: 800;
+            border: 10px solid #4567ff
+        }
+
+        .game-center kbd {
+            background: #14213d;
+            color: #fff;
+            padding: 3px 8px;
+            border-radius: 6px
+        }
+
+        @keyframes gfloat {
+            50% {
+                transform: translateY(-10px)
+            }
+        }
+
+        @media(prefers-reduced-motion:reduce) {
+            * {
+                animation: none !important;
+                transition: none !important
+            }
+        }
+    </style>
+</head>
+
+<body class="game-page">
+    <header id="header" class="header fixed-top">
+        <div class="branding d-flex align-items-cente">
+            <div class="container position-relative d-flex align-items-center justify-content-between">
+                <a href="index.html" class="d-flex align-items-center text-decoration-none">
+                    <img class="rounded-5 me-2" src="img/logo.png" height="45" width="45" alt="Logo HMP D-III KA">
+                    <h4 class="mb-0">HMP D-III KA</h4>
+                </a>
+                <nav id="navmenu" class="navmenu">
+                    <ul>
+                        <li><a href="index.html"> Beranda</a></li>
+                        <li><a href="tentang_kami.html">Tentang Kami</a></li>
+                        <li><a href="struktur.html">Pengurus</a></li>
+                        <li><a href="dokumentasi.html">Dokumentasi</a></li>
+                        <li><a href="gallery.html">Galeri</a></li>
+                        <li><a href="kuis.html" class="active">Game</a></li>
+                        <li><a href="contact.html">Kontak</a></li>
+                    </ul>
+                    <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="game-center">
+        <div class="container">
+            <section class="g-hero mb-4" aria-label="Hero Game Center">
+                <div class="row align-items-center">
+                    <div class="col-md-8">
+                        <h1>Game Center</h1>
+                        <p class="mb-3">Selamat datang di Game Center HMP D-III Komputerisasi Akuntansi Universitas
+                            Imelda Medan. Bermain sambil belajar: 20 permainan seru seputar komputer, logika, dan
+                            pengetahuan umum!</p>
+                        <div class="d-flex flex-wrap gap-2">
+                            <div class="g-stat"><b id="gTotalGames">20</b>Game</div>
+                            <div class="g-stat"><b id="gPlayed">0</b>Sudah dimainkan</div>
+                            <div class="g-stat"><b id="gSum">0</b>Total rekor</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 text-center d-none d-md-block"><i class="fas fa-gamepad g-big"></i></div>
+                </div>
+            </section>
+
+            <section class="mb-4" aria-label="Pencarian dan filter">
+                <div class="row g-2 align-items-center">
+                    <div class="col-lg-5"><input id="gSearch" type="search" class="form-control form-control-lg"
+                            placeholder="Cari game berdasarkan judul..." aria-label="Cari game"></div>
+                    <div class="col-lg-3">
+                        <select id="gDiff" class="form-select form-select-lg" aria-label="Filter tingkat kesulitan">
+                            <option value="">Semua tingkat</option>
+                            <option>Mudah</option>
+                            <option>Sedang</option>
+                            <option>Sulit</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-4 text-lg-end text-muted fw-semibold" id="gCount" aria-live="polite"></div>
+                </div>
+                <div class="d-flex flex-wrap gap-2 mt-3" id="gCats"></div>
+            </section>
+
+            <div class="row g-3" id="gGrid"></div>
+            <div id="gEmpty" class="alert alert-warning mt-3 d-none">Tidak ada game yang cocok dengan pencarian atau
+                filter. Coba kata kunci lain atau pilih "Semua".</div>
+        </div>
+    </main>
+
+    <div class="modal fade game-panel" id="gModal" tabindex="-1" aria-labelledby="gTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="gTitle">Game</h5><button type="button" class="btn-close"
+                        data-bs-dismiss="modal" aria-label="Tutup"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="gInfo"></div>
+                    <p class="small text-muted" id="gHow"></p>
+                    <div id="gBody"></div>
+                </div>
+                <div class="modal-footer"><button class="btn btn-primary" id="gAgain" type="button">Main
+                        Lagi</button><button class="btn btn-outline-secondary" data-bs-dismiss="modal"
+                        type="button">Kembali ke Game Center</button></div>
+            </div>
+        </div>
+    </div>
+
+    <footer id="footer" class="footer-16 footer position-relative">
+        <div class="container">
+            <div class="footer-main">
+                <div class="row align-items-start">
+                    <div class="col-lg-5 text-center text-lg-start">
+                        <div class="brand-section">
+                            <a href="index.html" class="logo d-flex align-items-center mb-4">
+                                <img src="img/logo.png" alt="Logo HMP D-III KA" width="45" height="45"
+                                    class="mr-2 rounded-5">
+                                <span class="sitename text-center text-lg-start">HMP D-III KA</span>
+                            </a>
+                            <div class="contact-info">
+                                <div class="contact-item">
+                                    <a href="https://uimedan.ac.id/"> <i class="fas fa-map-marker-alt mr-2"></i>
+                                        Universitas Imelda
+                                        Medan</a>
+                                </div>
+                                <div class="contact-item">
+                                    <a href="https://uimedan.ac.id/page/d3-komputerisasi-akuntansi"> <i
+                                            class="fas fa-graduation-cap mr-2"></i> D-III Komputerisasi Akuntansi</a>
+                                </div>
+                                <div class="contact-item">
+                                    <i class="fas fa-envelope mr-2"></i>
+                                    <a href="mailto:emailresmi@contoh.com">
+                                        Email HMP D-III KA
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-7 text-center text-lg-start">
+                        <div class="footer-nav-wrapper">
+                            <div class="row">
+                                <div class="col-6 col-lg-3">
+                                    <div class="nav-column">
+                                        <h6>
+                                            <i class="fas fa-compass mr-1"></i>
+                                            Navigasi
+                                        </h6>
+                                        <nav class="footer-nav">
+                                            <a href="index.html"> Beranda</a>
+                                            <a href="tentang_kami.html">Tentang Kami</a>
+                                            <a href="struktur.html">Pengurus</a>
+                                            <a href="contact.html">Kontak</a>
+                                        </nav>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-lg-3 text-center text-lg-start">
+                                    <div class="nav-column">
+                                        <h6>
+                                            <i class="fas fa-info-circle mr-1"></i>
+                                            Informasi
+                                        </h6>
+                                        <nav class="footer-nav">
+                                            <a href="gallery.html">Galeri</a>
+                                            <a href="dokumentasi.html">Dokumentasi</a>
+                                            <a href="kuis.html">Kuis Zona</a>
+                      <a href="kuis.html">Game</a>
+
+                                        </nav>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-lg-3 text-center text-lg-start">
+                                    <div class="nav-column">
+                                        <h6>
+                                            <i class="fas fa-users mr-1"></i>
+                                            Organisasi
+                                        </h6>
+                                        <nav class="footer-nav">
+                                            <a href="tentang_kami.html">Profil HMP</a>
+                                            <a href="struktur.html">Struktur Organisasi</a>
+                                            <a href="gallery.html">Kegiatan Mahasiswa</a>
+                                             <a href="tentang_kami.html">Visi & Misi</a>
+
+                                        </nav>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-lg-3 text-center text-lg-start">
+                                    <div class="nav-column">
+                                        <h6>
+                                            <i class="fas fa-share-alt mr-1"></i>
+                                            Media Sosial
+                                        </h6>
+                                        <nav class="footer-nav">
+                                            <a href="https://www.tiktok.com/@szeka_27" aria-label="TikTok HMP">
+                                                <i class="fab fa-tiktok mr-2"></i>
+                                                TikTok
+                                            </a>
+                                            <a href="https://www.instagram.com/himaka.uim/" aria-label="Instagram HMP">
+                                                <i class="fab fa-instagram mr-2"></i>
+                                                Instagram
+                                            </a>
+
+                                            <a href="https://wa.me/62085362102165?text=Halo%2C%20saya%20ingin%20menghubungi%20HMP%20D-III%20Komputerisasi%20Akuntansi%20Universitas%20Imelda%20Medan.%20Apakah%20saya%20bisa%20mendapatkan%20informasi%20lebih%20lanjut%3F%20Terima%20kasih."
+                                                target="_blank" rel="noopener">
+                                                <i class="fab fa-whatsapp me-2"></i> Hubungi Kami
+                                            </a>
+                                            <a href="mailto:emailresmi@contoh.com">
+                                                <i class="fas fa-envelope mr-2"></i>
+                                                Email HMP
+                                            </a>
+                                        </nav>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <hr>
+        <!-- COPYRIGHT -->
+        <div class="footer-bottom">
+            <div class="container">
+               <div class="bottom-content">
+
+                    <div class="row align-items-center">
+
+                        <div class="col-lg-6">
+                            <div class="copyright">
+                                <p>
+                                    © 2026
+                                    <span class="sitename">HMP D-III KA UIM</span>.
+                                    Seluruh hak cipta dilindungi.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="legal-links">
+                                <span>
+                                    <i class="fas fa-quote-left me-1"></i>
+                                    Satu Organisasi, Sejuta Inspirasi.
+                                    <i class="fas fa-quote-right ms-1"></i>
+                                </span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/vendor/php-email-form/validate.js"></script>
+    <script src="assets/vendor/aos/aos.js"></script>
+    <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+    <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
+    <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+    <!-- Main JS File -->
+    <script src="assets/js/main.js"></script>
+
+    <script>
+        (() => {
+            const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
+            const sh = a => [...a].map(v => [Math.random(), v]).sort((x, y) => x[0] - y[0]).map(v => v[1]);
+            let T = [], cur;
+            const clr = () => { T.forEach(t => { clearInterval(t); clearTimeout(t); }); T = []; };
+            const tm = (f, ms) => { const t = setInterval(f, ms); T.push(t); return t; };
+            const to = (f, ms) => { const t = setTimeout(f, ms); T.push(t); return t; };
+            const st = {
+                get: k => { try { return +localStorage.getItem('gc_' + k) || 0; } catch (e) { return 0; } },
+                set: (k, v) => { try { localStorage.setItem('gc_' + k, v); } catch (e) { } }
+            };
+            const body = h => { $('#gBody').innerHTML = h; };
+            const info = (a, b) => { $('#gInfo').innerHTML = `<span>${a}</span><span>${b}</span>`; };
+
+            function fin(s, txt) {
+                clr();
+                const b = st.get(cur.id), nr = s > b;
+                if (nr) st.set(cur.id, s);
+                info('Selesai', `Rekor: ${Math.max(s, b)}`);
+                body(`<div class="text-center py-3"><div class="g-ring">${s}</div><h4>${txt}</h4><p>${nr && s > 0 ? '🎉 Rekor baru!' : 'Rekor terbaik: ' + b}</p></div>`);
+                stats();
+            }
+
+            /* ===== Mesin pilihan ganda: item = [pertanyaan, jawaban, [salah...]] ===== */
+            function mc(items, o = {}) {
+                const pool = sh(items), n = o.total ? pool.length : Math.min(o.n || 5, pool.length);
+                let i = 0, s = 0, d = 0, left = o.total || 0, tq;
+                const end = () => fin(s, o.total ? `${s} benar dari ${d} dijawab` : `${s} dari ${n} benar`);
+                if (o.total) tm(() => { left--; const e = $('#gL'); if (e) e.textContent = left + 's'; if (left <= 0) end(); }, 1000);
+                const ask = () => {
+                    if (i >= n) return end();
+                    const [q, a, w] = pool[i]; let tl = o.t || 0, lock = 0;
+                    info(o.total ? `⏱ <b id="gL">${left}s</b>` : `Soal ${i + 1}/${n}${tl ? ` · ⏱ <b id="gL">${tl}s</b>` : ''}`, `Skor ${s}`);
+                    body(`<div class="g-q">${q}</div><div class="d-grid gap-2">${sh([a, ...sh(w).slice(0, 3)]).map(t => `<button type="button" class="btn g-opt">${t}</button>`).join('')}</div><div id="gFb" class="mt-3 fw-semibold"></div>`);
+                    const bs = $$('.g-opt');
+                    const pick = b => {
+                        if (lock) return; lock = 1; clearInterval(tq); d++;
+                        const ok = !!b && b.textContent === a; if (ok) s++;
+                        bs.forEach(x => { x.disabled = true; if (x.textContent === a) x.classList.add('ok'); });
+                        if (b && !ok) b.classList.add('bad');
+                        $('#gFb').innerHTML = ok ? '✅ Benar!' : `❌ ${b ? 'Salah' : 'Waktu habis'}. Jawaban: ${a}`;
+                        i++; to(ask, o.total ? 450 : 1100);
+                    };
+                    bs.forEach(b => b.onclick = () => pick(b));
+                    if (o.t && !o.total) tq = tm(() => { tl--; $('#gL').textContent = tl + 's'; if (tl <= 0) pick(null); }, 1000);
+                };
+                ask();
+            }
+
+            /* ===== Mesin jawaban ketik: item = [petunjuk, jawaban] ===== */
+            function typ(items) {
+                const pool = sh(items).slice(0, 5); let i = 0, s = 0;
+                const ask = () => {
+                    if (i >= pool.length) return fin(s, `${s} dari ${pool.length} benar`);
+                    const [h, a] = pool[i]; let lock = 0;
+                    info(`Soal ${i + 1}/${pool.length}`, `Skor ${s}`);
+                    body(`<div class="g-q">${h}</div><input id="gIn" class="form-control form-control-lg mb-2" autocomplete="off" placeholder="Ketik jawabanmu"><div class="d-flex gap-2"><button type="button" class="btn btn-primary" id="gOk">Periksa</button><button type="button" class="btn btn-outline-secondary" id="gSk">Lewati</button></div><div id="gFb" class="mt-3 fw-semibold"></div>`);
+                    const inp = $('#gIn'); inp.focus();
+                    const chk = skip => {
+                        if (lock) return; const v = inp.value.trim().toLowerCase(); if (!skip && !v) return;
+                        lock = 1; const ok = !skip && v === a.toLowerCase(); if (ok) s++;
+                        $('#gFb').innerHTML = ok ? '✅ Benar!' : `❌ ${skip ? 'Dilewati' : 'Salah'}. Jawaban: ${a}`;
+                        i++; to(ask, 1200);
+                    };
+                    $('#gOk').onclick = () => chk(false); $('#gSk').onclick = () => chk(true);
+                    inp.onkeydown = e => { if (e.key === 'Enter') chk(false); };
+                };
+                ask();
+            }
+
+            /* ===== Data ===== */
+            const auto = (p, f) => p.map(([c, a]) => [f ? f(c) : c, a, p.filter(x => x[1] !== a).map(x => x[1])]);
+            const CMP = [['Otak komputer yang memproses instruksi', 'CPU'], ['Memori sementara, data hilang saat komputer mati', 'RAM'], ['Penyimpanan cepat tanpa piringan berputar', 'SSD'], ['Papan utama tempat semua komponen terhubung', 'Motherboard'], ['Memproses tampilan grafis', 'GPU / VGA'], ['Memasok listrik ke komponen', 'Power Supply'], ['Perangkat input untuk menunjuk dan mengklik', 'Mouse'], ['Menampilkan output visual', 'Monitor']];
+            const TERM = [['Bahasa untuk membuat struktur halaman web (4 huruf)', 'HTML'], ['Bahasa untuk mengatur tampilan web (3 huruf)', 'CSS'], ['Alamat sebuah halaman di internet (3 huruf)', 'URL'], ['Unit pemroses utama komputer (3 huruf)', 'CPU'], ['Penghubung agar dua aplikasi saling berkomunikasi (3 huruf)', 'API'], ['Memori sementara komputer (3 huruf)', 'RAM']];
+            const LG = [['html5', 'HTML5'], ['css3-alt', 'CSS3'], ['js', 'JavaScript'], ['python', 'Python'], ['github', 'GitHub'], ['android', 'Android'], ['windows', 'Windows'], ['linux', 'Linux'], ['chrome', 'Chrome'], ['react', 'React'], ['php', 'PHP'], ['apple', 'Apple']];
+            const HW = ['Keyboard', 'Mouse', 'RAM', 'Monitor', 'Printer', 'Motherboard'], SW = ['Microsoft Excel', 'Windows', 'Google Chrome', 'Accurate', 'Photoshop', 'Visual Studio Code'];
+            const SC = [['Ctrl + C', 'Menyalin'], ['Ctrl + V', 'Menempel'], ['Ctrl + X', 'Memotong'], ['Ctrl + Z', 'Membatalkan (Undo)'], ['Ctrl + S', 'Menyimpan'], ['Ctrl + A', 'Memilih semua'], ['Ctrl + P', 'Mencetak']];
+            const LOGIC = [
+                ['Aku punya tombol tapi bukan pintu, punya spasi tapi bukan ruangan. Apakah aku?', 'Keyboard', ['Laptop', 'Brankas', 'Rumah']],
+                ['Ali lebih tinggi dari Budi, Budi lebih tinggi dari Cici. Siapa yang paling pendek?', 'Cici', ['Ali', 'Budi', 'Sama semua']],
+                ['Semua mahasiswa KA belajar akuntansi. Rani mahasiswa KA. Maka Rani…', 'Belajar akuntansi', ['Seorang dosen', 'Tidak belajar akuntansi', 'Belajar kedokteran']],
+                ['Apa yang makin diambil makin besar?', 'Lubang', ['Kolam', 'Gunung', 'Uang']],
+                ['Hari ini Rabu. Dua hari lagi hari apa?', 'Jumat', ['Kamis', 'Sabtu', 'Senin']],
+                ['Apa yang punya kepala dan ekor tapi tidak punya badan?', 'Koin', ['Ular', 'Ikan', 'Kucing']]];
+            const TRAP = [
+                ['Berapa bulan dalam setahun yang punya 28 hari?', 'Semua bulan', ['Hanya Februari', 'Satu', 'Dua']],
+                ['Kamu berlari dan menyalip orang di posisi kedua. Sekarang kamu di posisi…', 'Kedua', ['Pertama', 'Ketiga', 'Keempat']],
+                ['Berapa tanah di lubang berukuran 1 m x 1 m x 1 m?', 'Tidak ada', ['1 m³', '1 ton', '0,5 m³']],
+                ['Dokter memberi 3 pil, diminum tiap setengah jam. Berapa lama sampai habis?', '1 jam', ['1,5 jam', '3 jam', '2 jam']],
+                ['Ayah Budi punya 5 anak: Ani, Ina, Ono, Unu, dan…?', 'Budi', ['Ena', 'Ano', 'Ini']],
+                ['Mana lebih berat: 1 kg kapas atau 1 kg besi?', 'Sama berat', ['Besi', 'Kapas', 'Tergantung']]];
+            const PAT = [['2, 4, 6, 8, …', '10', ['9', '12', '11']], ['1, 2, 4, 8, 16, …', '32', ['24', '30', '20']], ['1, 4, 9, 16, …', '25', ['20', '24', '36']], ['1, 1, 2, 3, 5, 8, …', '13', ['11', '12', '14']], ['100, 90, 80, 70, …', '60', ['50', '65', '55']], ['3, 6, 12, 24, …', '48', ['36', '30', '42']]];
+            const WORDS = ['komputer', 'akuntansi', 'jaringan', 'aplikasi', 'keyboard', 'mahasiswa', 'internet'];
+            const EMO = [['💻🌐', 'Website'], ['📶🏠', 'WiFi'], ['🔒🔑', 'Password'], ['☁️💾', 'Cloud Storage'], ['🐛💻', 'Bug'], ['🤖🧠', 'Kecerdasan Buatan (AI)'], ['📧📎', 'Email']];
+            const SEQ = [
+                ['Menyalakan komputer', ['Tekan tombol power', 'Tunggu proses booting', 'Login ke akun', 'Buka aplikasi']],
+                ['Membuat tabel di Excel', ['Buka Microsoft Excel', 'Ketik data', 'Blok data', 'Beri border']],
+                ['Mematikan komputer', ['Simpan pekerjaan', 'Tutup semua aplikasi', 'Klik Start lalu Shut down', 'Tunggu hingga mati']]];
+            const TFP = [['RAM menyimpan data secara permanen.', 'Salah'], ['CSS dipakai untuk mengatur tampilan website.', 'Benar'], ['Ctrl + Z dipakai untuk membatalkan tindakan terakhir.', 'Benar'], ['Monitor termasuk perangkat input.', 'Salah'], ['Jurnal umum adalah catatan transaksi akuntansi.', 'Benar'], ['1 byte sama dengan 1 bit.', 'Salah'], ['Microsoft Excel adalah perangkat keras.', 'Salah']];
+            const JOB = [['Merancang dan membuat website', 'Web Developer'], ['Merancang tampilan aplikasi agar nyaman dipakai', 'UI/UX Designer'], ['Menganalisis data untuk menemukan pola', 'Data Analyst'], ['Menjaga sistem dan jaringan dari serangan siber', 'Cyber Security Specialist'], ['Merawat dan mengelola jaringan komputer', 'Network Administrator'], ['Mengelola basis data organisasi', 'Database Administrator'], ['Menguji aplikasi untuk menemukan bug', 'Software Tester']];
+            const GK = [
+                ['Pendiri Microsoft bersama Paul Allen adalah…', 'Bill Gates', ['Steve Jobs', 'Mark Zuckerberg', 'Elon Musk']],
+                ['Persamaan dasar akuntansi adalah…', 'Aset = Kewajiban + Ekuitas', ['Aset = Kewajiban − Ekuitas', 'Laba = Aset + Kewajiban', 'Kas = Piutang + Utang']],
+                ['Planet terbesar di tata surya adalah…', 'Jupiter', ['Saturnus', 'Bumi', 'Mars']],
+                ['Universitas Imelda berada di kota…', 'Medan', ['Jakarta', 'Bandung', 'Padang']],
+                ['Satu byte terdiri dari berapa bit?', '8', ['4', '16', '10']],
+                ['Laporan yang menunjukkan laba atau rugi disebut…', 'Laporan Laba Rugi', ['Neraca', 'Jurnal Umum', 'Buku Besar']],
+                ['WWW adalah singkatan dari…', 'World Wide Web', ['World Web Wire', 'Wide World Web', 'Web World Wide']]];
+            const scFn = k => `Fungsi <kbd>${k}</kbd> adalah…`;
+            const hsItems = () => [...HW.map(x => [`<b>${x}</b> termasuk…`, 'Perangkat Keras', ['Perangkat Lunak']]), ...SW.map(x => [`<b>${x}</b> termasuk…`, 'Perangkat Lunak', ['Perangkat Keras']])];
+            const tfItems = () => TFP.map(([s, a]) => [s, a, [a === 'Benar' ? 'Salah' : 'Benar']]);
+            const all = () => [...auto(CMP, c => c + '?'), ...auto(SC, scFn), ...auto(EMO, e => `Emoji ${e} berarti…`), ...tfItems(), ...GK, ...LOGIC, ...PAT, ...hsItems()];
+            const mathQ = () => Array.from({ length: 8 }, () => {
+                const a = 2 + Math.random() * 18 | 0, b = 2 + Math.random() * 12 | 0, op = ['+', '−', '×'][Math.random() * 3 | 0];
+                const r = op === '+' ? a + b : op === '−' ? a - b : a * b, w = new Set();
+                while (w.size < 3) { const x = r + ((Math.random() * 9 | 0) - 4) * (op === '×' ? 2 : 1); if (x !== r) w.add(x); }
+                return [`${a} ${op} ${b} = ?`, '' + r, [...w].map(String)];
+            });
+            const scr = w => { let x; do { x = sh(w.split('')).join(''); } while (x === w); return x.split('').join(' ').toUpperCase(); };
+
+            /* ===== Game dengan mekanisme khusus ===== */
+            function diff() {
+                const P = [['🙂', '🙃'], ['⚽', '🏀'], ['🔒', '🔓'], ['📁', '📂'], ['😀', '😃'], ['🖥️', '💻'], ['⌚', '⏰'], ['🔈', '🔉']];
+                let r = 0, s = 0; const R = 6;
+                const go = () => {
+                    if (r >= R) return fin(s, `${s} dari ${R} benar`);
+                    const n = r + 3, [a, b] = sh(P)[0], x = Math.random() * n * n | 0;
+                    info(`Ronde ${r + 1}/${R}`, `Skor ${s}`);
+                    body(`<p class="text-center">Temukan emoji yang berbeda!</p><div class="g-grid" style="grid-template-columns:repeat(${n},1fr)">${Array.from({ length: n * n }, (_, k) => `<button type="button" class="btn g-cell" data-k="${k}">${k === x ? b : a}</button>`).join('')}</div><div id="gFb" class="mt-3 fw-semibold text-center"></div>`);
+                    $$('.g-cell').forEach(c => c.onclick = () => {
+                        const ok = +c.dataset.k === x; if (ok) s++;
+                        $$('.g-cell').forEach(z => z.disabled = true); c.classList.add(ok ? 'ok' : 'bad');
+                        $('#gFb').textContent = ok ? '✅ Tepat!' : '❌ Salah'; r++; to(go, 800);
+                    });
+                };
+                go();
+            }
+
+            function mem() {
+                const E = ['💻', '🖱️', '⌨️', '🖨️', '💾', '📱', '🔒', '🌐'], cs = sh([...E, ...E]);
+                let f = [], mv = 0, m = 0, lock = 0;
+                info('Cocokkan semua pasangan', 'Gerakan 0');
+                body(`<div class="g-grid" style="grid-template-columns:repeat(4,1fr)">${cs.map((e, k) => `<button type="button" class="btn g-cell g-mc" data-k="${k}" aria-label="Kartu ${k + 1}">❓</button>`).join('')}</div>`);
+                const B = $$('.g-mc');
+                B.forEach(b => b.onclick = () => {
+                    const k = +b.dataset.k; if (lock || b.classList.contains('ok') || f.includes(k)) return;
+                    b.textContent = cs[k]; f.push(k);
+                    if (f.length === 2) {
+                        mv++; info('Cocokkan semua pasangan', 'Gerakan ' + mv); const [p, q] = f;
+                        if (cs[p] === cs[q]) { B[p].classList.add('ok'); B[q].classList.add('ok'); f = []; if (++m === 8) to(() => fin(Math.max(0, 100 - (mv - 8) * 6), `Selesai dalam ${mv} gerakan`), 600); }
+                        else { lock = 1; to(() => { B[p].textContent = B[q].textContent = '❓'; f = []; lock = 0; }, 800); }
+                    }
+                });
+            }
+
+            function react() {
+                const R = 3, ms = []; let sc = 0;
+                const round = () => {
+                    if (ms.length >= R) return fin(sc, `Rata-rata ${Math.round(ms.reduce((a, b) => a + b, 0) / R)} ms`);
+                    info(`Ronde ${ms.length + 1}/${R}`, `Skor ${sc}`);
+                    body('<button type="button" id="gR" class="g-react wait">Tunggu hingga HIJAU…</button><div id="gFb" class="mt-3 fw-semibold text-center"></div>');
+                    const b = $('#gR'); let t0 = 0;
+                    const tt = to(() => { t0 = performance.now(); b.className = 'g-react go'; b.textContent = 'KLIK SEKARANG!'; }, 1000 + Math.random() * 2500);
+                    b.onclick = () => {
+                        b.disabled = true;
+                        if (!t0) { clearTimeout(tt); $('#gFb').textContent = '⚠️ Terlalu cepat! Ronde diulang.'; to(round, 1200); return; }
+                        const m = Math.round(performance.now() - t0); ms.push(m);
+                        sc += Math.max(0, Math.min(100, Math.round((800 - m) / 8))); b.textContent = m + ' ms'; to(round, 1100);
+                    };
+                };
+                round();
+            }
+
+            function ord() {
+                const S = sh(SEQ); let q = 0, er = 0;
+                const go = () => {
+                    if (q >= S.length) return fin(Math.max(0, 12 - er), `${er} kesalahan`);
+                    const [t, stp] = S[q]; let k = 0;
+                    info(`Urutan ${q + 1}/${S.length}`, `Salah ${er}`);
+                    body(`<div class="g-q">Urutkan langkah: <b>${t}</b></div><div class="d-grid gap-2">${sh(stp).map(x => `<button type="button" class="btn g-opt">${x}</button>`).join('')}</div><div id="gFb" class="mt-3 fw-semibold">Klik langkah pertama.</div>`);
+                    $$('.g-opt').forEach(b => b.onclick = () => {
+                        if (b.textContent === stp[k]) {
+                            b.classList.add('ok'); b.disabled = true; b.prepend(`${++k}. `);
+                            $('#gFb').textContent = k < stp.length ? '✅ Benar, lanjutkan!' : '🎉 Urutan selesai!';
+                            if (k === stp.length) { q++; to(go, 900); }
+                        } else { er++; info(`Urutan ${q + 1}/${S.length}`, `Salah ${er}`); $('#gFb').textContent = '❌ Bukan langkah itu, coba lagi.'; }
+                    });
+                };
+                go();
+            }
+
+            /* ===== Daftar game ===== */
+            const CATS = { A: 'Komputer & Teknologi', B: 'Logika & Teka-teki', C: 'Kecepatan & Ketelitian', D: 'Kreativitas & Pengetahuan' };
+            const G = [
+                { t: 'Tebak Komponen Komputer', i: 'fa-microchip', c: 'A', d: 'Mudah', ds: 'Tebak CPU, RAM, SSD, motherboard, dan perangkat lain dari petunjuknya.', h: 'Pilih nama komponen yang sesuai petunjuk.', run: () => mc(auto(CMP, c => c + '?'), { n: 5 }) },
+                { t: 'Tebak Istilah IT', i: 'fa-keyboard', c: 'A', d: 'Sedang', ds: 'Ketik istilah IT (HTML, CSS, URL, API) dari petunjuk.', h: 'Ketik jawaban lalu tekan Periksa atau Enter.', run: () => typ(TERM) },
+                { t: 'Tebak Logo Teknologi', i: 'fa-icons', c: 'A', d: 'Mudah', ds: 'Kenali logo teknologi populer dari ikonnya.', h: 'Pilih nama logo yang tampil.', run: () => mc(LG.map(([ic, n]) => [`<i class="fab fa-${ic} g-logo"></i>Logo apa ini?`, n, LG.filter(x => x[1] !== n).map(x => x[1])]), { n: 6 }) },
+                { t: 'Hardware vs Software', i: 'fa-laptop-code', c: 'A', d: 'Mudah', ds: 'Tentukan objek termasuk perangkat keras atau perangkat lunak.', h: 'Pilih salah satu dari dua jawaban.', run: () => mc(hsItems(), { n: 8 }) },
+                { t: 'Tebak Shortcut Keyboard', i: 'fa-command', c: 'A', d: 'Sedang', ds: 'Tebak fungsi kombinasi tombol seperti Ctrl+C dan Ctrl+V.', h: 'Pilih fungsi yang tepat untuk shortcut.', run: () => mc(auto(SC, scFn), { n: 6 }) },
+                { t: 'Teka-Teki Logika', i: 'fa-puzzle-piece', c: 'B', d: 'Sedang', ds: 'Selesaikan teka-teki logika dengan jawaban yang tepat.', h: 'Baca dengan teliti lalu pilih jawaban.', run: () => mc(LOGIC, { n: 5 }) },
+                { t: 'Tebak Pola Angka', i: 'fa-arrow-up-1-9', c: 'B', d: 'Sedang', ds: 'Tentukan angka selanjutnya berdasarkan pola.', h: 'Cari pola barisan angka.', run: () => mc(PAT, { n: 5 }) },
+                { t: 'Tebak Kata', i: 'fa-font', c: 'B', d: 'Sedang', ds: 'Susun huruf acak menjadi kata yang benar.', h: 'Ketik kata dari huruf yang diacak.', run: () => typ(WORDS.map(w => [`Susun huruf ini menjadi kata:<br><b class="g-scr">${scr(w)}</b>`, w])) },
+                { t: 'Teka-Teki Jebakan', i: 'fa-circle-question', c: 'B', d: 'Sulit', ds: 'Pertanyaan yang butuh ketelitian, hati-hati jebakan!', h: 'Jangan terburu-buru menjawab.', run: () => mc(TRAP, { n: 5 }) },
+                { t: 'Asah Otak Matematika', i: 'fa-calculator', c: 'B', d: 'Mudah', ds: 'Selesaikan soal hitungan singkat yang selalu baru.', h: 'Hitung lalu pilih hasilnya.', run: () => mc(mathQ(), { n: 8 }) },
+                { t: 'Tantangan 60 Detik', i: 'fa-stopwatch', c: 'C', d: 'Sulit', ds: 'Jawab sebanyak mungkin pertanyaan sebelum 60 detik habis.', h: 'Waktu 60 detik, soal terus berganti.', run: () => mc(all(), { total: 60 }) },
+                { t: 'Tebak Cepat', i: 'fa-bolt', c: 'C', d: 'Sedang', ds: 'Setiap soal hanya punya waktu 8 detik.', h: 'Jawab sebelum timer habis.', run: () => mc(all(), { n: 6, t: 8 }) },
+                { t: 'Tes Ketelitian', i: 'fa-magnifying-glass', c: 'C', d: 'Sedang', ds: 'Temukan emoji yang berbeda di antara banyak emoji kembar.', h: 'Klik emoji yang berbeda. Grid makin besar tiap ronde.', run: diff },
+                { t: 'Memory Card', i: 'fa-clone', c: 'C', d: 'Mudah', ds: 'Cocokkan pasangan kartu bergambar sama.', h: 'Buka dua kartu; makin sedikit gerakan, makin tinggi skor.', run: mem },
+                { t: 'Reaksi Cepat', i: 'fa-hand-pointer', c: 'C', d: 'Sedang', ds: 'Klik secepat mungkin saat layar berubah hijau.', h: '3 ronde. Jangan klik sebelum hijau!', run: react },
+                { t: 'Tebak Emoji', i: 'fa-face-smile', c: 'D', d: 'Mudah', ds: 'Tebak istilah teknologi dari kombinasi emoji.', h: 'Pilih arti emoji yang tampil.', run: () => mc(auto(EMO, e => `<span style="font-size:2.5rem">${e}</span><br>berarti…`), { n: 5 }) },
+                { t: 'Susun Urutan Komputer', i: 'fa-list-ol', c: 'D', d: 'Sedang', ds: 'Urutkan langkah-langkah proses komputer dengan benar.', h: 'Klik langkah sesuai urutan yang benar.', run: ord },
+                { t: 'Benar atau Salah', i: 'fa-circle-check', c: 'D', d: 'Mudah', ds: 'Nilai pernyataan seputar komputer dan akuntansi.', h: 'Pilih Benar atau Salah.', run: () => mc(tfItems(), { n: 6 }) },
+                { t: 'Tebak Profesi IT', i: 'fa-user-gear', c: 'D', d: 'Sedang', ds: 'Tebak profesi IT dari deskripsi pekerjaannya.', h: 'Pilih profesi yang sesuai.', run: () => mc(auto(JOB, d => d + '. Profesi apa ini?'), { n: 5 }) },
+                { t: 'Tantangan Pengetahuan Umum', i: 'fa-graduation-cap', c: 'D', d: 'Sedang', ds: 'Pertanyaan seputar teknologi, pendidikan, dan kampus.', h: 'Pilih jawaban yang paling tepat.', run: () => mc(GK, { n: 5 }) }
+            ].map((g, k) => ({ ...g, id: 'g' + (k + 1) }));
+
+            /* ===== Tampilan daftar, pencarian, filter ===== */
+            let cat = '';
+            function stats() {
+                const b = G.map(g => st.get(g.id));
+                $('#gPlayed').textContent = b.filter(x => x > 0).length;
+                $('#gSum').textContent = b.reduce((x, y) => x + y, 0);
+                $$('.g-best').forEach(e => { const v = st.get(e.dataset.id); e.textContent = v ? 'Rekor: ' + v : 'Belum dimainkan'; });
+            }
+            function render() {
+                const q = $('#gSearch').value.trim().toLowerCase(), df = $('#gDiff').value;
+                const list = G.filter(g => (!cat || g.c === cat) && (!df || g.d === df) && g.t.toLowerCase().includes(q));
+                $('#gGrid').innerHTML = list.map(g => `<div class="col-md-6 col-xl-4 col-xxl-3"><article class="game-card"><div class="g-ic"><i class="fas ${g.i}"></i></div><h5>${g.t}</h5><p>${g.ds}</p><div class="d-flex justify-content-between align-items-center mb-2"><span class="g-badge ${g.d}">${g.d}</span><small class="g-best text-muted" data-id="${g.id}"></small></div><button type="button" class="btn btn-primary w-100 g-play" data-id="${g.id}"><i class="fas fa-play me-1"></i> Mainkan</button></article></div>`).join('');
+                $('#gCount').textContent = `Menampilkan ${list.length} dari ${G.length} permainan`;
+                $('#gEmpty').classList.toggle('d-none', list.length > 0);
+                stats();
+            }
+            $('#gCats').innerHTML = [['', 'Semua'], ...Object.entries(CATS)].map(([k, v]) => `<button type="button" class="g-chip${k ? '' : ' on'}" data-c="${k}">${v}</button>`).join('');
+            $('#gCats').onclick = e => { const b = e.target.closest('.g-chip'); if (!b) return; cat = b.dataset.c; $$('.g-chip').forEach(x => x.classList.toggle('on', x === b)); render(); };
+            $('#gSearch').oninput = render; $('#gDiff').onchange = render;
+
+            /* ===== Modal permainan ===== */
+            let modal; try { modal = new bootstrap.Modal($('#gModal')); } catch (e) { }
+            const start = () => { clr(); $('#gHow').textContent = cur.h; try { cur.run(); } catch (e) { body('<div class="alert alert-danger">Terjadi kesalahan. Klik Main Lagi.</div>'); } };
+            $('#gGrid').onclick = e => {
+                const b = e.target.closest('.g-play'); if (!b) return;
+                cur = G.find(g => g.id === b.dataset.id); $('#gTitle').textContent = cur.t; modal && modal.show(); start();
+            };
+            $('#gAgain').onclick = () => cur && start();
+            $('#gModal').addEventListener('hidden.bs.modal', () => { clr(); body(''); });
+            render();
+        })();
+    </script>
+</body>
+
+</html>
